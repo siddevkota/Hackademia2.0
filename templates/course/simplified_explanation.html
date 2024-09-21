@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} Detailed Explanation | {{ video.title }} {% endblock title %}
+
+{% block body %}
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg">
+                <h5 class="card-header">Detailed Explanation: {{ video.title }}</h5>
+                <div class="card-body">
+                    <h4>Detailed Explanation</h4>
+                    {{ simplified_response|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+    Chatbot.init({
+        chatflowid: "b1262bef-f1b4-4ec7-a402-91b72001019e",
+        apiHost: "http://localhost:3000",
+    })
+</script>
+{% endblock body %}

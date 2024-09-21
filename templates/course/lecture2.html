@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ video.title }} | {{ course.title }} {% endblock title %}
+
+{% block head %} {% endblock head %}
+{% load humanize %}
+
+{% block body %}
+
+<h1>{{ course.title }}</h1>
+
+<h2>Sections</h2>
+<ul>
+    {% for sec in section %}
+        <li>{{ sec.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Lecture: {{ lecture.title }}</h2>
+
+<div>
+    <h3>Video Content</h3>
+    <p>{{ video.video_url }}</p>  <!-- Assuming video URL or similar data is available in lecture -->
+</div>
+
+<h2>Description</h2>
+<p>{{ content }}</p>  <!-- This will display the AI-generated content -->
+
+<h2>Comments</h2>
+<ul>
+    {% for comment in lecture_comment %}
+        <li>{{ comment.user }}: {{ comment.text }}</li>
+    {% endfor %}
+</ul>
+{% endblock body %}

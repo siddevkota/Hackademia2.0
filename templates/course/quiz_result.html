@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Results for {{ section.title }}{% endblock title %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg">
+                <h5 class="card-header">Quiz Results: {{ section.title }}</h5>
+                <div class="card-body">
+                    <h4 class="mb-3">You answered {{ score }} out of {{ total_questions }} questions correctly!</h4>
+                    <h5>Your score: {{ percentage_score }}%</h5>
+
+                    <!-- Buttons to allow the user to retake the quiz or go back to the course -->
+                    <a href="{% url 'quiz_page' section_id=section.id %}" class="btn btn-primary mt-4">Retry Quiz</a>
+                    <a href="{% url 'course_detail' slug=section.course.course_slug %}" class="btn btn-secondary mt-4">Back to Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

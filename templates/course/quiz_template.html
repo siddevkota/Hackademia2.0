@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %} Quiz: {{ section.title }} {% endblock title %}
+
+{% block body %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg">
+                <h5 class="card-header">Quiz: {{ section.title }}</h5>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'submit_quiz' section_id=section.id %}">
+                        {% csrf_token %}
+                        {% for question in questions %}
+                        <div class="mb-4">
+                            <h6>{{ forloop.counter }}. {{ question.question }}</h6>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ question.option1 }}" required>
+                                    <label class="form-check-label">{{ question.option1 }}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ question.option2 }}">
+                                    <label class="form-check-label">{{ question.option2 }}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ question.option3 }}">
+                                    <label class="form-check-label">{{ question.option3 }}</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ question.option4 }}">
+                                    <label class="form-check-label">{{ question.option4 }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-success btn-block mt-4">Submit Quiz</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

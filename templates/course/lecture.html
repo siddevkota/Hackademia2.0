@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ video.title }} | {{ course.title }} {% endblock title %}
+
+{% block body %}
+<div class="container-fluid my-3">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+                <div class="card-header">
+                    {{ course.title }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ lecture.title }}</h5>
+                    <div class="accordion" id="accordionExample">
+                        {% for section in section %} 
+                        <div class="card">
+                            <div class="card-header" id="headingOne{{ section.id }}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne{{ section.id }}" aria-expanded="true"
+                                        aria-controls="collapseOne{{ section.id }}">
+                                        <img src="https://img.icons8.com/pastel-glyph/15/000000/plus.png" />
+                                        {{ section.title }}
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne{{ section.id }}" class="collapse show"
+                                aria-labelledby="headingOne{{ section.id }}" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    {% for lecture in lecture %} 
+                                    {% if lecture.section == section %}
+                                    {% if lecture.lecture_type == "NOT PREMIUM" %}
+                                    <li><a href="{{ lecture.lecture_slug }}">{{ lecture.title }}</a></li>
+                                    {% else %}
+                                    <li>{{ lecture.title }} <span class="badge badge-pill badge-secondary">PREMIUM VIDEO</span></li>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %} <!-- This closes the inner lecture loop -->
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %} <!-- This closes the section loop -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <h5 class="card-header">{{ video.title }}</h5>
+                <div class="card-body">
+                    <!-- Original content -->
+                    <iframe width="100%" height="450" src="{{ video.video_url }}"></iframe>
+                    <h4>Original Summary</h4>
+                    {{ html_content|safe }}
+
+                    <!-- Explain More Button -->
+                    <a href="{% url 'simplified_explanation' slug=course.course_slug lecture_slug=video.lecture_slug %}" class="btn btn-info mt-3">Explain More (Simplified)</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Flowise Chatbot Script -->
+<script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+    Chatbot.init({
+        chatflowid: "b1262bef-f1b4-4ec7-a402-91b72001019e",
+        apiHost: "http://localhost:3000",
+    })
+</script>
+
+
+{% endblock body %}
